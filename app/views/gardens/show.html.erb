@@ -3,14 +3,18 @@
     <h1><%= @garden.name %></h1>
   </div>
 </div>
-
 <div class="container">
+  <p><%= alert %></p>
   <div class="row mt-5">
     <% @garden.plants.each do |plant| %>
       <div class="col-4">
         <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= plant.image_url %>')">
           <%= plant.name %>
           <%= link_to "+", plant_path(plant), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "card-remove-link" %>
+          <%= link_to "add tag", new_plant_plant_tag_path(plant) %>
+          <% plant.tags.each do |tag| %>
+            <%= tag.name %>
+          <% end %>
         </div>
       </div>
     <% end %>
