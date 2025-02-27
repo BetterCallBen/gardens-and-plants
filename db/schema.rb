@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_14_165946) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_27_162109) do
+  create_table "chores", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "completions", force: :cascade do |t|
+    t.integer "plant_id", null: false
+    t.integer "chore_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chore_id"], name: "index_completions_on_chore_id"
+    t.index ["plant_id"], name: "index_completions_on_plant_id"
+  end
+
   create_table "gardens", force: :cascade do |t|
     t.string "name"
     t.string "banner_url"
@@ -18,4 +33,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_165946) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "plants", force: :cascade do |t|
+    t.integer "garden_id", null: false
+    t.string "name"
+    t.string "image_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["garden_id"], name: "index_plants_on_garden_id"
+  end
+
+  add_foreign_key "completions", "chores"
+  add_foreign_key "completions", "plants"
+  add_foreign_key "plants", "gardens"
 end

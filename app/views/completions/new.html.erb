@@ -1,0 +1,4 @@
+<%= simple_form_for([@plant, @completion]) do |f|%>
+  <%= f.association :chore %>
+  <%= f.submit "Compléter", class: "btn btn-primary" %>
+<% end %>
